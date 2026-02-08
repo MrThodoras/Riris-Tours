@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Riris Tours</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-gold: #D4A574;
+            --deep-navy: #1a2332;
+            --warm-sand: #E8D5C4;
+            --rich-earth: #8B6F47;
+            --soft-cream: #FAF7F2;
+            --accent-terracotta: #C9896B;
+        }
+
+        body {
+            font-family: 'Karla', sans-serif;
+            color: var(--deep-navy);
+            background: var(--soft-cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header Navigation */
+        .header-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--deep-navy);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-flag {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            object-fit: cover;
+        }
+
+        .lang-flag:hover {
+            transform: scale(1.1);
+        }
+
+        .lang-flag.active {
+            border-color: var(--primary-gold);
+        }
+
+        /* Hero Section */
+        .page-hero {
+            height: 60vh;
+            background: linear-gradient(135deg, rgba(26, 35, 50, 0.8), rgba(139, 111, 71, 0.5)),
+                        url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 90px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            color: white;
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 5%;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: var(--deep-navy);
+        }
+
+        .content-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--rich-earth);
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin: 80px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--primary-gold);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--deep-navy);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .team-section {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--rich-earth) 100%);
+            padding: 100px 5%;
+            margin: 80px 0;
+        }
+
+        .team-section .section-title {
+            color: white;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+
+        .team-member {
+            text-align: center;
+            color: white;
+        }
+
+        .team-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary-gold);
+        }
+
+        .team-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .team-role {
+            font-size: 1rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-navy);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 25px;
+        }
+
+        .footer-logo img {
+            height: 60px;
+            width: auto;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-links a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        .social-links a:hover {
+            color: white;
+            background: var(--primary-gold);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .header-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 5%;
+            }
+
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-hero {
+                margin-top: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header-nav">
+        <a href="riris-tours.html" class="logo-link">
+            <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\logo\riristourslogo_nobg.png" alt="Riris Tours">
+        </a>
+        <nav class="nav-links">
+            <a href="index.html" data-en="Home" data-el="Αρχική">Home</a>
+            <a href="About Us.html" data-en="About Us" data-el="Σχετικά με εμάς">About Us</a>
+            <a href="FAQ.html" data-en="FAQ" data-el="Συχνές Ερωτήσεις">FAQ</a>
+            <div class="language-switcher">
+                <img src="https://flagcdn.com/w80/us.png" alt="English" class="lang-flag active" data-lang="en" title="English">
+                <img src="https://flagcdn.com/w80/gr.png" alt="Greek" class="lang-flag" data-lang="el" title="Ελληνικά">
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <h1 data-en="About Riris Tours" data-el="Σχετικά με Riris Tours">About Riris Tours</h1>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <h2 class="section-title" data-en="Our Story" data-el="Η Ιστορία μας">Our Story</h2>
+        <p class="content-text" data-en="Founded in 2005, Riris Tours was born from a passion for exploration and a deep love for the world's most captivating destinations. What started as a small family business has grown into one of the most respected travel agencies in the Mediterranean, known for crafting bespoke journeys that transform the way people experience the world." data-el="Ιδρύθηκε το 2005, η Riris Tours γεννήθηκε από πάθος για εξερεύνηση και βαθιά αγάπη για τους πιο συναρπαστικούς προορισμούς του κόσμου. Αυτό που ξεκίνησε ως μια μικρή οικογενειακή επιχείρηση έχει εξελιχθεί σε ένα από τα πιο σεβαστά ταξιδιωτικά γραφεία στη Μεσόγειο, γνωστό για τη δημιουργία ταξιδιών που μεταμορφώνουν τον τρόπο που οι άνθρωποι βιώνουν τον κόσμο.">Founded in 2005, Riris Tours was born from a passion for exploration and a deep love for the world's most captivating destinations. What started as a small family business has grown into one of the most respected travel agencies in the Mediterranean, known for crafting bespoke journeys that transform the way people experience the world.</p>
+
+        <p class="content-text" data-en="Our philosophy is simple: travel should be transformative, authentic, and unforgettable. We believe in creating experiences that go beyond the typical tourist trail, connecting you with the heart and soul of each destination. Whether you're seeking the sun-drenched islands of Greece, the romantic streets of Paris, or the exotic landscapes of Asia, we curate every detail with precision and care." data-el="Η φιλοσοφία μας είναι απλή: το ταξίδι πρέπει να είναι μεταμορφωτικό, αυθεντικό και αξέχαστο. Πιστεύουμε στη δημιουργία εμπειριών που ξεπερνούν το τυπικό τουριστικό μονοπάτι, συνδέοντάς σας με την καρδιά και την ψυχή κάθε προορισμού. Είτε αναζητάτε τα ηλιόλουστα νησιά της Ελλάδας, τους ρομαντικούς δρόμους του Παρισιού ή τα εξωτικά τοπία της Ασίας, επιμελούμαστε κάθε λεπτομέρεια με ακρίβεια και φροντίδα.">Our philosophy is simple: travel should be transformative, authentic, and unforgettable. We believe in creating experiences that go beyond the typical tourist trail, connecting you with the heart and soul of each destination. Whether you're seeking the sun-drenched islands of Greece, the romantic streets of Paris, or the exotic landscapes of Asia, we curate every detail with precision and care.</p>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">20+</div>
+                <div class="stat-label" data-en="Years Experience" data-el="Χρόνια Εμπειρίας">Years Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50,000+</div>
+                <div class="stat-label" data-en="Happy Travelers" data-el="Ευτυχισμένοι Ταξιδιώτες">Happy Travelers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">120+</div>
+                <div class="stat-label" data-en="Destinations" data-el="Προορισμοί">Destinations</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label" data-en="Satisfaction Rate" data-el="Ποσοστό Ικανοποίησης">Satisfaction Rate</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <h2 class="section-title" data-en="Meet Our Team" data-el="Γνωρίστε την Ομάδα μας">Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\staff\riris.png" alt="Riris" class="team-photo">
+                <h3 class="team-name" data-en="Riris" data-el="Ρίρης">Riris</h3>
+                <p class="team-role" data-en="Founder & CEO" data-el="Ιδρύτρια & CEO">Founder & CEO</p>
+            </div>
+            <div class="team-member">
+                <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\staff\giannoss.png" alt="Giannis Pantazhs" class="team-photo">
+                <h3 class="team-name" data-en="Giannis Pantazhs" data-el="Γιάννης Πανταζής">Giannis Pantazhs</h3>
+                <p class="team-role" data-en="Travel Director" data-el="Διευθυντής Ταξιδιών">Travel Director</p>
+            </div>
+            <div class="team-member">
+                <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\staff\drest.png" alt="Giorgos Drestiliaris" class="team-photo">
+                <h3 class="team-name" data-en="Giorgos Drestiliaris" data-el="Γεώργιος Δρεστηλιάρης">Giorgos Drestiliaris</h3>
+                <p class="team-role" data-en="Customer Experience" data-el="Εμπειρία Πελάτη">Customer Experience</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+ <footer>
+        <div class="footer-logo">
+            <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\logo\riristourslogo_nobg.png" alt="Riris Tours">
+        </div>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin-bottom: 20px;" data-en="Riris Tours" data-el="Riris Tours">Riris Tours</h2>
+        <p data-en="Creating unforgettable journeys since 2005" data-el="Δημιουργώντας αξέχαστα ταξίδια από το 2005">Creating unforgettable journeys since 2005</p>
+        <p>
+            <span data-en="Contact: " data-el="Επικοινωνία: ">Contact: </span>
+            <a href="mailto:info@riristours.com">info@riristours.com</a> | 
+            <a href="tel:+302101234567">+30 210 1234567</a>
+        </p>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/_ifantis_?igsh=MWthYXZzNGZodmJkdQ%3D%3D&utm_source=qr" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@drestiliaris3" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        
+        <p style="margin-top: 40px; opacity: 0.6; font-size: 0.9rem;" data-en="© 2026 Riris Tours. All rights reserved." data-el="© 2026 Riris Tours. Όλα τα δικαιώματα διατηρούνται.">© 2026 Riris Tours. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Language Switcher
+        const flags = document.querySelectorAll('.lang-flag');
+        let currentLang = 'en';
+
+        flags.forEach(flag => {
+            flag.addEventListener('click', () => {
+                const lang = flag.getAttribute('data-lang');
+                if (lang !== currentLang) {
+                    currentLang = lang;
+                    
+                    flags.forEach(f => f.classList.remove('active'));
+                    flag.classList.add('active');
+                    
+                    document.querySelectorAll('[data-en]').forEach(element => {
+                        const translation = element.getAttribute(`data-${lang}`);
+                        if (translation) {
+                            element.textContent = translation;
+                        }
+                    });
+                    
+                    document.documentElement.lang = lang;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riris Tours - Discover the World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-gold: #D4A574;
+            --deep-navy: #1a2332;
+            --warm-sand: #E8D5C4;
+            --rich-earth: #8B6F47;
+            --soft-cream: #FAF7F2;
+            --accent-terracotta: #C9896B;
+        }
+
+        body {
+            font-family: 'Karla', sans-serif;
+            color: var(--deep-navy);
+            background: var(--soft-cream);
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling performance */
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Top Logo */
+        .top-logo {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .top-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            display: block;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            padding: 10px 25px;
+            background: transparent;
+            color: var(--deep-navy);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-gold);
+            color: white;
+            border-color: var(--primary-gold);
+        }
+
+        .lang-flag {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            object-fit: cover;
+        }
+
+        .lang-flag:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-flag.active {
+            border-color: var(--primary-gold);
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(26, 35, 50, 0.7), rgba(139, 111, 71, 0.4)),
+                        url('https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212, 165, 116, 0.15) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+            text-shadow: 2px 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: var(--primary-gold);
+            color: var(--deep-navy);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1.6s ease-out;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            background: var(--rich-earth);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 5%;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--deep-navy);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--rich-earth);
+            font-size: 1.1rem;
+            margin-bottom: 80px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Destinations Grid */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .destination-card {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, box-shadow;
+            backface-visibility: hidden;
+        }
+
+        .destination-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(26, 35, 50, 0.85) 0%, transparent 60%);
+            z-index: 1;
+            transition: all 0.5s ease;
+        }
+
+        .destination-card:hover::before {
+            background: linear-gradient(to top, rgba(26, 35, 50, 0.7) 0%, rgba(212, 165, 116, 0.2) 60%);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .destination-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .destination-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 35px;
+            z-index: 2;
+            color: white;
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+
+        .destination-card:hover .destination-info {
+            transform: translateY(-10px);
+        }
+
+        .destination-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.02em;
+        }
+
+        .destination-country {
+            font-size: 0.95rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .destination-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .destination-card:hover .destination-description {
+            opacity: 1;
+            max-height: 100px;
+        }
+
+        /* Featured Section */
+        .featured {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--rich-earth) 100%);
+            color: white;
+            margin: 80px 0;
+        }
+
+        .featured .section-title {
+            color: white;
+        }
+
+        .featured .section-subtitle {
+            color: var(--primary-gold);
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .featured-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+        }
+
+        .featured-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .featured-item h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .featured-item p {
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-navy);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-links a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        .social-links a:hover {
+            color: white;
+            background: var(--primary-gold);
+            transform: translateY(-5px);
+        }
+
+        .footer-logo {
+            margin-bottom: 25px;
+        }
+
+        .footer-logo img {
+            height: 60px;
+            width: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .language-switcher {
+                top: 20px;
+                right: 20px;
+                padding: 8px 12px;
+            }
+
+            .lang-flag {
+                width: 35px;
+                height: 35px;
+            }
+
+            .top-logo {
+                top: 100px;
+                left: 20px;
+                padding: 10px 20px;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            .nav-buttons {
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 8px 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+
+            .destinations-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            section {
+                padding: 80px 5%;
+            }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Logo -->
+    <div class="top-logo">
+        <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\logo\riristourslogo_nobg.png" alt="Riris Tours" class="logo-img">
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <a href="About Us.html" class="nav-btn" data-en="About Us" data-el="Σχετικά με εμάς">About Us</a>
+        <a href="FAQ.html" class="nav-btn" data-en="FAQ" data-el="Συχνές Ερωτήσεις">FAQ</a>
+    </div>
+
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <img src="https://flagcdn.com/w80/us.png" alt="English" class="lang-flag active" data-lang="en" title="English">
+        <img src="https://flagcdn.com/w80/gr.png" alt="Greek" class="lang-flag" data-lang="el" title="Ελληνικά">
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 data-en="Riris Tours" data-el="Riris Tours">Riris Tours</h1>
+            <p class="hero-subtitle" data-en="Explore. Dream. Discover." data-el="Εξερευνήστε. Ονειρευτείτε. Ανακαλύψτε.">Explore. Dream. Discover.</p>
+            <a href="#destinations" class="cta-button" data-en="Start Your Journey" data-el="Ξεκινήστε το Ταξίδι σας">Start Your Journey</a>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations">
+        <h2 class="section-title reveal" data-en="Signature Destinations" data-el="Προορισμοί Υπογραφής">Signature Destinations</h2>
+        <p class="section-subtitle reveal" data-en="Curated experiences around the globe" data-el="Επιμελημένες εμπειρίες σε όλο τον κόσμο">Curated experiences around the globe</p>
+        
+        <div class="destinations-grid">
+            <a href="https://en.wikipedia.org/wiki/Santorini" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800" alt="Santorini">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Santorini" data-el="Σαντορίνη">Santorini</h3>
+                    <p class="destination-country" data-en="Greece" data-el="Ελλάδα">Greece</p>
+                    <p class="destination-description" data-en="Whitewashed villages perched on volcanic cliffs overlooking the azure Aegean Sea." data-el="Ασπρισμένα χωριά σκαρφαλωμένα σε ηφαιστειακούς γκρεμούς με θέα το γαλάζιο Αιγαίο.">Whitewashed villages perched on volcanic cliffs overlooking the azure Aegean Sea.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Paris" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" alt="Paris">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Paris" data-el="Παρίσι">Paris</h3>
+                    <p class="destination-country" data-en="France" data-el="Γαλλία">France</p>
+                    <p class="destination-description" data-en="The City of Light enchants with timeless elegance, world-class art, and romantic boulevards." data-el="Η Πόλη του Φωτός μαγεύει με διαχρονική κομψότητα, τέχνη παγκόσμιας κλάσης και ρομαντικές λεωφόρους.">The City of Light enchants with timeless elegance, world-class art, and romantic boulevards.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Kyoto" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800" alt="Kyoto">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Kyoto" data-el="Κιότο">Kyoto</h3>
+                    <p class="destination-country" data-en="Japan" data-el="Ιαπωνία">Japan</p>
+                    <p class="destination-description" data-en="Ancient temples, serene gardens, and traditional geisha culture in Japan's cultural heart." data-el="Αρχαίοι ναοί, γαλήνιοι κήποι και παραδοσιακή κουλτούρα γκέισα στην πολιτιστική καρδιά της Ιαπωνίας.">Ancient temples, serene gardens, and traditional geisha culture in Japan's cultural heart.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Mykonos" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1601581875309-fafbf2d3ed3a?w=800" alt="Mykonos">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Mykonos" data-el="Μύκονος">Mykonos</h3>
+                    <p class="destination-country" data-en="Greece" data-el="Ελλάδα">Greece</p>
+                    <p class="destination-description" data-en="Cosmopolitan island paradise with iconic windmills, pristine beaches, and vibrant nightlife." data-el="Κοσμοπολίτικος νησιωτικός παράδεισος με εμβληματικούς ανεμόμυλους, παρθένες παραλίες και ζωντανή νυχτερινή ζωή.">Cosmopolitan island paradise with iconic windmills, pristine beaches, and vibrant nightlife.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Venice" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=800" alt="Venice">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Venice" data-el="Βενετία">Venice</h3>
+                    <p class="destination-country" data-en="Italy" data-el="Ιταλία">Italy</p>
+                    <p class="destination-description" data-en="A floating masterpiece of canals, Gothic architecture, and Renaissance splendor." data-el="Ένα επιπλέον αριστούργημα καναλιών, γοτθικής αρχιτεκτονικής και αναγεννησιακής μεγαλοπρέπειας.">A floating masterpiece of canals, Gothic architecture, and Renaissance splendor.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Bali" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800" alt="Bali">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Bali" data-el="Μπαλί">Bali</h3>
+                    <p class="destination-country" data-en="Indonesia" data-el="Ινδονησία">Indonesia</p>
+                    <p class="destination-description" data-en="Tropical paradise with emerald rice terraces, spiritual temples, and turquoise waters." data-el="Τροπικός παράδεισος με σμαραγδένιες πεζούλες ρυζιού, πνευματικούς ναούς και τιρκουάζ νερά.">Tropical paradise with emerald rice terraces, spiritual temples, and turquoise waters.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Crete" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1580837119756-563d608dd119?w=800" alt="Crete">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Crete" data-el="Κρήτη">Crete</h3>
+                    <p class="destination-country" data-en="Greece" data-el="Ελλάδα">Greece</p>
+                    <p class="destination-description" data-en="Greece's largest island boasts ancient Minoan palaces, dramatic gorges, and authentic villages." data-el="Το μεγαλύτερο νησί της Ελλάδας διαθέτει αρχαία μινωικά ανάκτορα, εντυπωσιακά φαράγγια και αυθεντικά χωριά.">Greece's largest island boasts ancient Minoan palaces, dramatic gorges, and authentic villages.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Dubai" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800" alt="Dubai">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Dubai" data-el="Ντουμπάι">Dubai</h3>
+                    <p class="destination-country" data-en="United Arab Emirates" data-el="Ηνωμένα Αραβικά Εμιράτα">United Arab Emirates</p>
+                    <p class="destination-description" data-en="Futuristic metropolis where soaring skyscrapers meet golden desert dunes and luxury shopping." data-el="Φουτουριστική μητρόπολη όπου οι ουρανοξύστες συναντούν τις χρυσές αμμοθίνες και τα πολυτελή εμπορικά κέντρα.">Futuristic metropolis where soaring skyscrapers meet golden desert dunes and luxury shopping.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Athens" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=800" alt="Athens">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Athens" data-el="Αθήνα">Athens</h3>
+                    <p class="destination-country" data-en="Greece" data-el="Ελλάδα">Greece</p>
+                    <p class="destination-description" data-en="The cradle of Western civilization, where ancient ruins stand beside a vibrant modern city." data-el="Η κούνια του δυτικού πολιτισμού, όπου αρχαία ερείπια στέκονται δίπλα σε μια ζωντανή σύγχρονη πόλη.">The cradle of Western civilization, where ancient ruins stand beside a vibrant modern city.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Maldives" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800" alt="Maldives">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Maldives" data-el="Μαλδίβες">Maldives</h3>
+                    <p class="destination-country" data-en="Indian Ocean" data-el="Ινδικός Ωκεανός">Indian Ocean</p>
+                    <p class="destination-description" data-en="Overwater villas and coral reefs in an archipelago of pure tropical luxury and tranquility." data-el="Βίλες πάνω στο νερό και κοραλλιογενείς ύφαλοι σε ένα αρχιπέλαγος καθαρής τροπικής πολυτέλειας και ηρεμίας.">Overwater villas and coral reefs in an archipelago of pure tropical luxury and tranquility.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/Barcelona" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800" alt="Barcelona">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="Barcelona" data-el="Βαρκελώνη">Barcelona</h3>
+                    <p class="destination-country" data-en="Spain" data-el="Ισπανία">Spain</p>
+                    <p class="destination-description" data-en="Gaudí's architectural wonders, Mediterranean beaches, and Catalan culture converge spectacularly." data-el="Τα αρχιτεκτονικά θαύματα του Γκαουντί, οι μεσογειακές παραλίες και η καταλανική κουλτούρα συγκλίνουν εντυπωσιακά.">Gaudí's architectural wonders, Mediterranean beaches, and Catalan culture converge spectacularly.</p>
+                </div>
+            </a>
+
+            <a href="https://en.wikipedia.org/wiki/New_York_City" target="_blank" class="destination-card reveal">
+                <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800" alt="New York">
+                <div class="destination-info">
+                    <h3 class="destination-name" data-en="New York" data-el="Νέα Υόρκη">New York</h3>
+                    <p class="destination-country" data-en="United States" data-el="Ηνωμένες Πολιτείες">United States</p>
+                    <p class="destination-description" data-en="The city that never sleeps pulses with energy, culture, and endless possibilities." data-el="Η πόλη που δεν κοιμάται ποτέ παλμάει από ενέργεια, πολιτισμό και ατελείωτες δυνατότητες.">The city that never sleeps pulses with energy, culture, and endless possibilities.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="featured">
+        <h2 class="section-title" data-en="Why Choose Riris Tours" data-el="Γιατί να επιλέξετε Riris Tours">Why Choose Riris Tours</h2>
+        <p class="section-subtitle" data-en="Excellence in every journey" data-el="Αριστεία σε κάθε ταξίδι">Excellence in every journey</p>
+        
+        <div class="featured-grid">
+            <div class="featured-item reveal">
+                <div class="featured-icon">✈️</div>
+                <h3 data-en="Expert Guides" data-el="Έμπειροι Οδηγοί">Expert Guides</h3>
+                <p data-en="Local specialists who bring destinations to life with insider knowledge and passion." data-el="Τοπικοί ειδικοί που ζωντανεύουν τους προορισμούς με γνώση εσωτερικής πληροφόρησης και πάθος.">Local specialists who bring destinations to life with insider knowledge and passion.</p>
+            </div>
+            
+            <div class="featured-item reveal">
+                <div class="featured-icon">🌟</div>
+                <h3 data-en="Luxury Experiences" data-el="Πολυτελείς Εμπειρίες">Luxury Experiences</h3>
+                <p data-en="Handpicked accommodations and exclusive activities for discerning travelers." data-el="Επιλεγμένα καταλύματα και αποκλειστικές δραστηριότητες για απαιτητικούς ταξιδιώτες.">Handpicked accommodations and exclusive activities for discerning travelers.</p>
+            </div>
+            
+            <div class="featured-item reveal">
+                <div class="featured-icon">🛡️</div>
+                <h3 data-en="24/7 Support" data-el="Υποστήριξη 24/7">24/7 Support</h3>
+                <p data-en="Round-the-clock assistance ensuring peace of mind throughout your adventure." data-el="Υποστήριξη όλο το 24ωρο που εξασφαλίζει ηρεμία σε όλη τη διάρκεια της περιπέτειάς σας.">Round-the-clock assistance ensuring peace of mind throughout your adventure.</p>
+            </div>
+            
+            <div class="featured-item reveal">
+                <div class="featured-icon">🎯</div>
+                <h3 data-en="Tailored Itineraries" data-el="Προσαρμοσμένα Δρομολόγια">Tailored Itineraries</h3>
+                <p data-en="Custom journeys designed around your interests, pace, and travel style." data-el="Προσαρμοσμένα ταξίδια σχεδιασμένα γύρω από τα ενδιαφέροντα, τον ρυθμό και το στυλ ταξιδιού σας.">Custom journeys designed around your interests, pace, and travel style.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\logo\riristourslogo_nobg.png" alt="Riris Tours">
+        </div>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin-bottom: 20px;" data-en="Riris Tours" data-el="Riris Tours">Riris Tours</h2>
+        <p data-en="Creating unforgettable journeys since 2005" data-el="Δημιουργώντας αξέχαστα ταξίδια από το 2005">Creating unforgettable journeys since 2005</p>
+        <p>
+            <span data-en="Contact: " data-el="Επικοινωνία: ">Contact: </span>
+            <a href="mailto:info@riristours.com">info@riristours.com</a> | 
+            <a href="tel:+302101234567">+30 210 1234567</a>
+        </p>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/_ifantis_?igsh=MWthYXZzNGZodmJkdQ%3D%3D&utm_source=qr" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@drestiliaris3" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        
+        <p style="margin-top: 40px; opacity: 0.6; font-size: 0.9rem;" data-en="© 2026 Riris Tours. All rights reserved." data-el="© 2026 Riris Tours. Όλα τα δικαιώματα διατηρούνται.">© 2026 Riris Tours. All rights reserved.</p>
+    </footer>
+
+
+    <script>
+        // Language Switcher
+        const flags = document.querySelectorAll('.lang-flag');
+        let currentLang = 'en';
+
+        flags.forEach(flag => {
+            flag.addEventListener('click', () => {
+                const lang = flag.getAttribute('data-lang');
+                if (lang !== currentLang) {
+                    currentLang = lang;
+                    
+                    // Update active flag
+                    flags.forEach(f => f.classList.remove('active'));
+                    flag.classList.add('active');
+                    
+                    // Update all translatable content
+                    document.querySelectorAll('[data-en]').forEach(element => {
+                        const translation = element.getAttribute(`data-${lang}`);
+                        if (translation) {
+                            element.textContent = translation;
+                        }
+                    });
+                    
+                    // Update HTML lang attribute
+                    document.documentElement.lang = lang;
+                }
+            });
+        });
+
+        // Scroll reveal animation - optimized
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger animation for grid items
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 50);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const offsetTop = target.offsetTop;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Optimized parallax effect on hero with requestAnimationFrame
+        let ticking = false;
+        
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.4}px)`;
+                hero.style.opacity = 1 - (scrolled / (window.innerHeight * 1.2));
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+    </script>
+</body>
+</html>

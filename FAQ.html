@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Riris Tours</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-gold: #D4A574;
+            --deep-navy: #1a2332;
+            --warm-sand: #E8D5C4;
+            --rich-earth: #8B6F47;
+            --soft-cream: #FAF7F2;
+            --accent-terracotta: #C9896B;
+        }
+
+        body {
+            font-family: 'Karla', sans-serif;
+            color: var(--deep-navy);
+            background: var(--soft-cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header Navigation */
+        .header-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--deep-navy);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-flag {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            object-fit: cover;
+        }
+
+        .lang-flag:hover {
+            transform: scale(1.1);
+        }
+
+        .lang-flag.active {
+            border-color: var(--primary-gold);
+        }
+
+        /* Hero Section */
+        .page-hero {
+            height: 60vh;
+            background: linear-gradient(135deg, rgba(26, 35, 50, 0.8), rgba(139, 111, 71, 0.5)),
+                        url('https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 90px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            color: white;
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 5%;
+        }
+
+        .section-intro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: var(--deep-navy);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--rich-earth);
+            line-height: 1.6;
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-question:hover {
+            background: var(--soft-cream);
+        }
+
+        .faq-question h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--deep-navy);
+            flex: 1;
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--primary-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background: var(--soft-cream);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 30px 25px 30px;
+        }
+
+        .faq-answer p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--rich-earth);
+        }
+
+        /* Contact CTA */
+        .contact-cta {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--rich-earth) 100%);
+            padding: 80px 5%;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .contact-cta h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 20px;
+        }
+
+        .contact-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: var(--primary-gold);
+            color: var(--deep-navy);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: all 0.4s ease;
+        }
+
+        .cta-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-navy);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 25px;
+        }
+
+        .footer-logo img {
+            height: 60px;
+            width: auto;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-links a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        .social-links a:hover {
+            color: white;
+            background: var(--primary-gold);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .header-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 5%;
+            }
+
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-hero {
+                margin-top: 150px;
+            }
+
+            .faq-question {
+                padding: 20px;
+            }
+
+            .faq-question h3 {
+                font-size: 1.2rem;
+            }
+
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header-nav">
+        <a href="index.html" class="logo-link">
+            <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\logo\riristourslogo_nobg.png" alt="Riris Tours">
+        </a>
+        <nav class="nav-links">
+            <a href="index.html" data-en="Home" data-el="Αρχική">Home</a>
+            <a href="About Us.html" data-en="About Us" data-el="Σχετικά με εμάς">About Us</a>
+            <a href="FAQ.html" data-en="FAQ" data-el="Συχνές Ερωτήσεις">FAQ</a>
+            <div class="language-switcher">
+                <img src="https://flagcdn.com/w80/us.png" alt="English" class="lang-flag active" data-lang="en" title="English">
+                <img src="https://flagcdn.com/w80/gr.png" alt="Greek" class="lang-flag" data-lang="el" title="Ελληνικά">
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <h1 data-en="Frequently Asked Questions" data-el="Συχνές Ερωτήσεις">Frequently Asked Questions</h1>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-intro">
+            <h2 class="section-title" data-en="We're Here to Help" data-el="Είμαστε εδώ να Βοηθήσουμε">We're Here to Help</h2>
+            <p class="section-subtitle" data-en="Find answers to common questions about traveling with Riris Tours" data-el="Βρείτε απαντήσεις σε συνήθεις ερωτήσεις σχετικά με το ταξίδι με την Riris Tours">Find answers to common questions about traveling with Riris Tours</p>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="How do I book a tour with Riris Tours?" data-el="Πώς μπορώ να κλείσω ένα ταξίδι με την Riris Tours;">How do I book a tour with Riris Tours?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="Booking with us is simple! You can contact us directly via email at info@riristours.com or call us at +30 210 1234567. Our travel specialists will work with you to create a customized itinerary that matches your preferences, budget, and travel dates. We handle all the details from accommodation to activities." data-el="Η κράτηση μαζί μας είναι απλή! Μπορείτε να επικοινωνήσετε μαζί μας απευθείας μέσω email στο info@riristours.com ή να μας καλέσετε στο +30 210 1234567. Οι ειδικοί ταξιδιών μας θα συνεργαστούν μαζί σας για να δημιουργήσουν ένα προσαρμοσμένο δρομολόγιο που ταιριάζει στις προτιμήσεις, τον προϋπολογισμό και τις ημερομηνίες ταξιδιού σας.">Booking with us is simple! You can contact us directly via email at info@riristours.com or call us at +30 210 1234567. Our travel specialists will work with you to create a customized itinerary that matches your preferences, budget, and travel dates. We handle all the details from accommodation to activities.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="What is included in the tour packages?" data-el="Τι περιλαμβάνεται στα πακέτα ταξιδιών;">What is included in the tour packages?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="Our tour packages typically include accommodation in carefully selected hotels, daily breakfast, guided tours with expert local guides, airport transfers, and all entrance fees to attractions. Specific inclusions vary by package, and we'll provide you with a detailed itinerary outlining everything that's covered." data-el="Τα πακέτα ταξιδιών μας συνήθως περιλαμβάνουν διαμονή σε προσεκτικά επιλεγμένα ξενοδοχεία, πρωινό καθημερινά, ξεναγήσεις με έμπειρους τοπικούς οδηγούς, μεταφορές από/προς το αεροδρόμιο και όλα τα εισιτήρια εισόδου σε αξιοθέατα.">Our tour packages typically include accommodation in carefully selected hotels, daily breakfast, guided tours with expert local guides, airport transfers, and all entrance fees to attractions. Specific inclusions vary by package, and we'll provide you with a detailed itinerary outlining everything that's covered.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="What is your cancellation policy?" data-el="Ποια είναι η πολιτική ακύρωσής σας;">What is your cancellation policy?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="Cancellations made 60 days or more before departure receive a full refund minus a $200 administrative fee. Cancellations between 30-59 days before departure receive a 50% refund. Cancellations less than 30 days before departure are non-refundable. We strongly recommend purchasing travel insurance to protect your investment." data-el="Οι ακυρώσεις που γίνονται 60 ημέρες ή περισσότερο πριν την αναχώρηση λαμβάνουν πλήρη επιστροφή χρημάτων μείον 200$ διοικητικό κόστος. Οι ακυρώσεις μεταξύ 30-59 ημερών πριν την αναχώρηση λαμβάνουν 50% επιστροφή. Οι ακυρώσεις λιγότερο από 30 ημέρες πριν την αναχώρηση δεν επιστρέφονται.">Cancellations made 60 days or more before departure receive a full refund minus a $200 administrative fee. Cancellations between 30-59 days before departure receive a 50% refund. Cancellations less than 30 days before departure are non-refundable. We strongly recommend purchasing travel insurance to protect your investment.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="Do you offer group discounts?" data-el="Προσφέρετε εκπτώσεις ομάδας;">Do you offer group discounts?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="Yes! We offer special rates for groups of 10 or more travelers. Group tours can also be fully customized to your specifications. Contact us for a personalized quote and to discuss your group's unique needs and interests." data-el="Ναι! Προσφέρουμε ειδικές τιμές για ομάδες 10 ή περισσότερων ταξιδιωτών. Οι ομαδικές εκδρομές μπορούν επίσης να προσαρμοστούν πλήρως στις προδιαγραφές σας. Επικοινωνήστε μαζί μας για μια εξατομικευμένη προσφορά.">Yes! We offer special rates for groups of 10 or more travelers. Group tours can also be fully customized to your specifications. Contact us for a personalized quote and to discuss your group's unique needs and interests.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="What languages do your guides speak?" data-el="Ποιες γλώσσες μιλούν οι ξεναγοί σας;">What languages do your guides speak?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="Our professional guides are multilingual and fluent in English, Greek, French, German, Italian, and Spanish. When you book your tour, let us know your preferred language and we'll ensure you're paired with a guide who speaks it fluently." data-el="Οι επαγγελματίες ξεναγοί μας είναι πολύγλωσσοι και μιλούν άπταιστα Αγγλικά, Ελληνικά, Γαλλικά, Γερμανικά, Ιταλικά και Ισπανικά. Όταν κλείσετε το ταξίδι σας, ενημερώστε μας για την προτιμώμενη γλώσσα σας.">Our professional guides are multilingual and fluent in English, Greek, French, German, Italian, and Spanish. When you book your tour, let us know your preferred language and we'll ensure you're paired with a guide who speaks it fluently.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="Is travel insurance included?" data-el="Περιλαμβάνεται ασφάλεια ταξιδιού;">Is travel insurance included?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="Travel insurance is not automatically included in our packages, but we highly recommend it and can help you purchase comprehensive coverage. Travel insurance protects you against unexpected events like trip cancellations, medical emergencies, lost luggage, and more." data-el="Η ασφάλεια ταξιδιού δεν περιλαμβάνεται αυτόματα στα πακέτα μας, αλλά τη συνιστούμε ανεπιφύλακτα και μπορούμε να σας βοηθήσουμε να αγοράσετε ολοκληρωμένη κάλυψη.">Travel insurance is not automatically included in our packages, but we highly recommend it and can help you purchase comprehensive coverage. Travel insurance protects you against unexpected events like trip cancellations, medical emergencies, lost luggage, and more.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="Can I customize my itinerary?" data-el="Μπορώ να προσαρμόσω το δρομολόγιό μου;">Can I customize my itinerary?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="Absolutely! Customization is one of our specialties. We can adjust any aspect of your tour including destinations, accommodation level, activities, pace, and duration. Our goal is to create the perfect journey tailored specifically to your interests and travel style." data-el="Απολύτως! Η προσαρμογή είναι μία από τις ειδικότητές μας. Μπορούμε να προσαρμόσουμε οποιαδήποτε πτυχή του ταξιδιού σας συμπεριλαμβανομένων προορισμών, επιπέδου διαμονής, δραστηριοτήτων, ρυθμού και διάρκειας.">Absolutely! Customization is one of our specialties. We can adjust any aspect of your tour including destinations, accommodation level, activities, pace, and duration. Our goal is to create the perfect journey tailored specifically to your interests and travel style.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3 data-en="What payment methods do you accept?" data-el="Ποιες μεθόδους πληρωμής δέχεστε;">What payment methods do you accept?</h3>
+                    <i class="fas fa-plus faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p data-en="We accept all major credit cards (Visa, MasterCard, American Express), bank transfers, and PayPal. A deposit of 30% is required to confirm your booking, with the remaining balance due 60 days before departure." data-el="Δεχόμαστε όλες τις κύριες πιστωτικές κάρτες (Visa, MasterCard, American Express), τραπεζικές μεταφορές και PayPal. Απαιτείται προκαταβολή 30% για την επιβεβαίωση της κράτησής σας.">We accept all major credit cards (Visa, MasterCard, American Express), bank transfers, and PayPal. A deposit of 30% is required to confirm your booking, with the remaining balance due 60 days before departure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="contact-cta">
+        <h2 data-en="Still Have Questions?" data-el="Έχετε Ακόμα Ερωτήσεις;">Still Have Questions?</h2>
+        <p data-en="Our travel experts are ready to help you plan your perfect journey" data-el="Οι ειδικοί ταξιδιών μας είναι έτοιμοι να σας βοηθήσουν να σχεδιάσετε το τέλειο ταξίδι σας">Our travel experts are ready to help you plan your perfect journey</p>
+        <a href="mailto:info@riristours.com" class="cta-button" data-en="Contact Us" data-el="Επικοινωνήστε Μαζί μας">Contact Us</a>
+    </section>
+
+    <!-- Footer -->
+ <footer>
+        <div class="footer-logo">
+            <img src="C:\Users\metal\Desktop\Coding\HTML\Riris Tours\images\logo\riristourslogo_nobg.png" alt="Riris Tours">
+        </div>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin-bottom: 20px;" data-en="Riris Tours" data-el="Riris Tours">Riris Tours</h2>
+        <p data-en="Creating unforgettable journeys since 2005" data-el="Δημιουργώντας αξέχαστα ταξίδια από το 2005">Creating unforgettable journeys since 2005</p>
+        <p>
+            <span data-en="Contact: " data-el="Επικοινωνία: ">Contact: </span>
+            <a href="mailto:info@riristours.com">info@riristours.com</a> | 
+            <a href="tel:+302101234567">+30 210 1234567</a>
+        </p>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/_ifantis_?igsh=MWthYXZzNGZodmJkdQ%3D%3D&utm_source=qr" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@drestiliaris3" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        
+        <p style="margin-top: 40px; opacity: 0.6; font-size: 0.9rem;" data-en="© 2026 Riris Tours. All rights reserved." data-el="© 2026 Riris Tours. Όλα τα δικαιώματα διατηρούνται.">© 2026 Riris Tours. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Language Switcher
+        const flags = document.querySelectorAll('.lang-flag');
+        let currentLang = 'en';
+
+        flags.forEach(flag => {
+            flag.addEventListener('click', () => {
+                const lang = flag.getAttribute('data-lang');
+                if (lang !== currentLang) {
+                    currentLang = lang;
+                    
+                    flags.forEach(f => f.classList.remove('active'));
+                    flag.classList.add('active');
+                    
+                    document.querySelectorAll('[data-en]').forEach(element => {
+                        const translation = element.getAttribute(`data-${lang}`);
+                        if (translation) {
+                            element.textContent = translation;
+                        }
+                    });
+                    
+                    document.documentElement.lang = lang;
+                }
+            });
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
